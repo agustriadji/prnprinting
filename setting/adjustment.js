@@ -9,7 +9,8 @@ const prnModels = {
 const prnData = async function(file,data){
     let label = file;
     try {
-        let defaultFile = fs.readFileSync("../content/default.txt").toString();
+        console.log(process.cwd()+"/content/default.txt");
+        let defaultFile = fs.readFileSync(process.cwd()+"/content/default.txt").toString();
         if(!label) label = defaultFile;
             
         let embed = Object.keys(data);
@@ -23,11 +24,12 @@ const prnData = async function(file,data){
 }
 
 const prnBuild = async function(setItem){
+    let set = null;
     try {        
         let { media, content, fineAdjust } = setItem;
-        let set = `
+        set = `
         <xpml><page quantity='0' pitch='${media.pitch} mm'></xpml>
-        {${setItem.model},${media.width},${media.height}|}
+        {${media.model},${media.width},${media.height}|}
         {AX;+${fineAdjust.feed},+${fineAdjust.backFeed},+${fineAdjust.cut}|}
         {AY;+10,1|}
         <xpml></page></xpml><xpml><page quantity='1' pitch='${media.pitch} mm'></xpml>{C|}
@@ -42,4 +44,6 @@ const prnBuild = async function(setItem){
     return set;
 }
 
-module.export = { prnBuild, prnData, prnModels };
+exports.prnBuild = prnBuild;
+exports.prnData = prnData;
+exports.prnModels = prnModels;
