@@ -1,0 +1,28 @@
+{
+  "name": "prnfile",
+  "version": "0.1.1",
+  "description": "adjustment prn file",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "start":"node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "node-printer": "^1.0.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agustriadji/prnprinting.git"
+  },
+  "keywords": [
+    "prn",
+    "printer"
+  ],
+  "author": "agustriadji",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/agustriadji/prnprinting/issues"
+  },
+  "homepage": "https://github.com/agustriadji/prnprinting#readme"
+}
