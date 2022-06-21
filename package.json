@@ -1,6 +1,6 @@
 {
   "name": "prnfile",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "adjustment prn file",
   "main": "index.js",
   "scripts": {
