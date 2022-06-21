@@ -28,9 +28,12 @@ async function prints(typeData,settingItem,dataItem){
             "_PTREF": "PTREF/13/12/2002/00001234",
         };
     
-        const dataSource = await adjusment.prnData(false,dataItem || data);
-    
+        const dataSource = await adjusment.prnData(dataItem||data);
+        
         setting.content = dataSource;
+        if(settingItem){
+            settingItem.content = dataSource;
+        }
         let raw = await adjusment.prnBuild(settingItem || setting);
     
         printer.printDirect({
