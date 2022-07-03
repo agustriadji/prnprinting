@@ -1,20 +1,18 @@
 const fs = require("fs");
 
+const Data = fs.readFileSync("./content/default.txt").toString();
+let Setting = fs.readFileSync("./content/settingDefault.json");
+
+Setting = JSON.parse(Setting);
+
 const prnModels = {
     Rectangle : "D0763",
     Rounded : "D0591",
     Circle:"D0274"
 }
 
-const prnData = async function(data){
-    let label = `{XB00;0083,0070,T,L,09,A,0,M2,K7=01_QRDAT|}
-    {PC000;0486,0104,05,05,I,00,B=_SECTION|}
-    {PC001;0700,0105,05,05,I,00,B=_STATE|}
-    {PC002;0486,0149,05,05,I,00,B=_SOURCEDOC|}
-    {PC003;0486,0265,05,05,I,00,B=PT NUMBER :|}
-    {PC004;0486,0301,05,05,I,00,B=_PTNUMBER|}
-    {PC005;0486,0406,05,05,I,00,B=_PTREF|}
-    {PC006;0486,0371,05,05,I,00,B=PT REFERENCE :|}`;
+const prnData = async function(data,prnString){
+    let label = prnString || Data;
     try {
         let embed = Object.keys(data);
         for(let i=0; i < embed.length; i++){
@@ -32,7 +30,7 @@ const prnBuild = async function(setItem){
         let { media, content, fineAdjust } = setItem;
         set = `
         <xpml><page quantity='0' pitch='${media.pitch} mm'></xpml>
-        {${media.model},${media.width},${media.height}|}
+        {${prnModels[media.model]},${media.width},${media.height}|}
         {AX;+${fineAdjust.feed},+${fineAdjust.backFeed},+${fineAdjust.cut}|}
         {AY;+10,1|}
         <xpml></page></xpml><xpml><page quantity='1' pitch='${media.pitch} mm'></xpml>{C|}
@@ -47,6 +45,7 @@ const prnBuild = async function(setItem){
     return set;
 }
 
+exports.default = { Setting, Data };
 exports.prnBuild = prnBuild;
 exports.prnData = prnData;
 exports.prnModels = prnModels;

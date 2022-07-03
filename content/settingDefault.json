@@ -1,0 +1,14 @@
+{
+    "media" : {
+        "model": "Rectangle",
+        "pitch":"54.1", 
+        "width":"1024",
+        "height":"0541"
+    },
+    "fineAdjust": {
+        "feed": "020",
+        "backFeed":"020",
+        "cut":"20"
+    },
+    "content":false
+}

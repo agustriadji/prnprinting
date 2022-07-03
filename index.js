@@ -1,45 +1,40 @@
 const printer = require("printer");
 const adjusment = require("./setting/adjustment");
+const fs = require("fs");
+const path = require("path");
+let setting  = adjusment.default.Setting;
 
-let setting  = {
-    // unit mm, type integer string
-    media : {
-        model: adjusment.prnModels.Rectangle,
-        pitch:"54.1", 
-        width:"1024",
-        height:"0541",
-    },
-    fineAdjust: {
-        feed: "020",
-        backFeed:"020",
-        cut:"20",
-    },
-    content:false
-}
-
-async function prints(typeData,settingItem,dataItem){
+async function prints(typeData,settingItem,dataItem,bufferFile){
     return new Promise(async(resolve)=>{
+        let prn = bufferFile || null;
+        //if(prn){
+            //prn = fs.readFileSync(pathfile,{encoding:"latin1"}).toString();
+        //}
         const data = {
-            "_SECTION": "Picking Micro",
-            "01_QRDAT": "TEST",
+            "_SECTION": "LABELING",
+            "01_QRDAT": "LABEL",
             "_STATE": "COMPLETED",
             "_SOURCEDOC": "CP/12/12/2001/0012345",
             "_PTNUMBER": "PTM/14/13/2001/0000123",
             "_PTREF": "PTREF/13/12/2002/00001234",
         };
-    
-        const dataSource = await adjusment.prnData(dataItem||data);
+        
+        const dataSource = await adjusment.prnData(dataItem||data,prn);
         
         setting.content = dataSource;
         if(settingItem){
             settingItem.content = dataSource;
         }
-        let raw = await adjusment.prnBuild(settingItem || setting);
-    
-        printer.printDirect({
-            data: raw,
+        if(!prn){
+            prn = await adjusment.prnBuild(settingItem || setting);
+        }else{
+            prn = new Buffer.alloc(dataSource.length,dataSource,"latin1");
+        }
+       
+       printer.printDirect({
+            data: prn,
             printer:printer.getDefaultPrinterName(),
-            // type: RAW, TEXT, PDF, JPEG, .. depends on platform
+            // type: RAW, TEXT, PDF, JPEG
             type: typeData, 
             success:function(jobID){
                 resolve(jobID);
@@ -49,5 +44,7 @@ async function prints(typeData,settingItem,dataItem){
         });
     });
 }
+// let prn = fs.readFileSync(path.join(__dirname,"content/tecmicroqr.prn"),{encoding:"latin1"}).toString();
+// prints("RAW",null,{"_QRDATA":"1003~INT/2022/00001","_PICKINGMICRO":"INT/2022/00001","_PTNUMBER":"data-origin"},prn)
 
 exports.printing = prints;
