@@ -1,7 +1,13 @@
 const fs = require("fs");
 
-const Data = fs.readFileSync("./content/default.txt").toString();
-let Setting = fs.readFileSync("./content/settingDefault.json");
+let DEFAULT =  path.resolve(__dirname,"../content/default.txt");
+let SETTING = path.resolve(__dirname,"../content/settingDefault.json");
+
+const Data = fs.readFileSync(DEFAULT).toString();
+let Setting = fs.readFileSync(SETTING);
+
+// const Data = fs.readFileSync("./content/default.txt").toString();
+// let Setting = fs.readFileSync("./content/settingDefault.json");
 
 Setting = JSON.parse(Setting);
 
