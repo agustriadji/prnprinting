@@ -1,6 +1,6 @@
 {
-  "name": "prnfile",
-  "version": "0.1.2",
+  "name": "sendprnfile",
+  "version": "0.0.1",
   "description": "adjustment prn file",
   "main": "index.js",
   "scripts": {
@@ -22,6 +22,6 @@
   },
   "homepage": "https://github.com/agustriadji/prnprinting#readme",
   "dependencies": {
-    "printer": "^0.4.0"
+    "printer": "git+ssh://git@github.com:tojocky/node-printer.git"
   }
 }
