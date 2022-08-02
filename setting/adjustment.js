@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require("path")
 
 let DEFAULT =  path.resolve(__dirname,"../content/default.txt");
 let SETTING = path.resolve(__dirname,"../content/settingDefault.json");
